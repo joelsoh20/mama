@@ -1,0 +1,31 @@
+# Éditeur de texte
+node_modules/
+.env
+.env.local
+.env.production
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+build/
+.cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Backend
+backend/node_modules/
+backend/dist/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
