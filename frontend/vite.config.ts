@@ -5,6 +5,6 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [
     react(),
-    tailwindcss(), // 2. Ajoute-le ici
+    tailwindcss(), 
   ],
 })

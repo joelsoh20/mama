@@ -8,32 +8,32 @@ export class AdminUser extends Model {
     autoIncrement: true,
     primaryKey: true,
   })
-  declare id: number;
+  declare id: number; 
 
   @Unique
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  email!: string;
+  declare email: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  password!: string;
+  declare password: string; // Le mot "declare" est crucial ici pour TS >= 4.0
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  name!: string;
+  declare name: string;
 
   @Column({
     type: DataType.ENUM('super_admin', 'editor'),
     defaultValue: 'editor',
   })
-  role!: string;
+  declare role: string;
 
   @BeforeCreate
   static async hashPassword(admin: AdminUser) {

@@ -1,34 +1,41 @@
 @import "tailwindcss";
-
-/* Mode sombre via la classe .dark */
-@variant dark (&:where(.dark, .dark *));
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* Le reste de ton code @theme et @layer ne change pas... */
+
+/* 3. CONFIGURATION DU THÈME (Fusionnée en un seul bloc) */
 @theme {
   /* Polices */
   --font-display: "Playfair Display", serif;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   
-  /* Tailles de base (optionnel) */
+  /* Couleurs Signature SOH & CHANTAL */
+  --color-primary: #003366;   /* Bleu Royal Navy */
+  --color-accent: #eab308;    /* Jaune Or */
+  --color-accent-hover: #ca8a04;
+  --bg-admin: #f8fafc;
+
+  /* Tailles de base */
   --text-base: 1rem;
   --text-base--line-height: 1.5;
 }
 
+/* 4. VARIANTS */
+@variant dark (&:where(.dark, .dark *));
+
+/* 5. COUCHES DE BASE */
 @layer base {
-  /* Assure une taille de base normale */
   html {
     font-size: 16px;
-    -webkit-text-size-adjust: 100%; /* Empêche le redimensionnement automatique sur mobile */
+    -webkit-text-size-adjust: 100%;
   }
   
   body {
     @apply font-sans antialiased bg-white text-black;
-    font-size: 1rem;
-    line-height: 1.5;
+    margin: 0;
+    padding: 0;
   }
   
-  /* Mode sombre */
   .dark body {
     @apply bg-neutral-950 text-white;
   }
@@ -38,6 +45,7 @@
   }
 }
 
+/* 6. COMPOSANTS SPÉCIFIQUES */
 @layer components {
   .hero-bg {
     background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/hero-couture.jpg');
@@ -46,9 +54,9 @@
   }
 }
 
-/* Améliorations responsive */
+/* 7. RESPONSIVE */
 @media (max-width: 768px) {
   html {
-    font-size: 14px; /* Optionnel : légère réduction sur mobile */
+    font-size: 14px;
   }
 }
