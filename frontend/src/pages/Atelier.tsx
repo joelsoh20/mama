@@ -11,6 +11,10 @@ import Couturiere3 from '../assets/Couturiere3.jpeg';
 import Couturiere2 from '../assets/Couturiere2.jpeg';
 import Couturiere4 from '../assets/Couturiere4.jpeg';
 
+import locaux1 from '../assets/Presentation25.jpeg';
+import locaux2 from '../assets/Presentation23.jpeg';
+import locaux3 from '../assets/Presentation19.jpeg';
+
 export default function Atelier() {
   const { t } = useTranslation();
 
@@ -39,11 +43,11 @@ export default function Atelier() {
     { id: 4, name: "Ruth", role: t('atelier.role_finishing'), image: Couturier1 },
   ];
 
-  // const locaux = [
-  //   { id: 1, url: "/src/assets/atelier-1.jpg", title: t('atelier.locaux_1') },
-  //   { id: 2, url: "/src/assets/atelier-2.jpg", title: t('atelier.locaux_2') },
-  //   { id: 3, url: "/src/assets/atelier-3.jpg", title: t('atelier.locaux_3') },
-  // ];
+  const locaux = [
+    { id: 1, url: locaux1, title: t('l/entrer de l/atelier') },
+    { id: 2, url: locaux2, title: t('atelier.locaux_2') },
+    { id: 3, url: locaux3, title: t('atelier.locaux_3') },
+  ];
 
   return (
     <div className="max-w-7xl mx-auto pt-46 px-6 py-16 bg-[#faf9f6] dark:bg-neutral-950 transition-colors duration-500">
@@ -100,7 +104,7 @@ export default function Atelier() {
           <h2 className="text-4xl font-serif text-[#003366] dark:text-white">{t('atelier.locaux_section_title')}</h2>
         </div>
 
-        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {locaux.map((photo, index) => (
             <motion.div
               key={photo.id}
@@ -123,7 +127,7 @@ export default function Atelier() {
               <p className="text-[#003366] dark:text-white font-bold">{t('atelier.location_city')}</p>
               <p className="text-gray-500 dark:text-gray-400 text-sm">{t('atelier.location_desc')}</p>
            </div>
-        </div> */}
+        </div>
       </section>
 
       {/* Section Équipe */}

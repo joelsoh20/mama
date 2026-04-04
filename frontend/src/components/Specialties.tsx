@@ -27,7 +27,7 @@ export default function Specialties() {
       title: t('spec_suit_title'), 
       tag: t('tag_prestige') || "Prestige",
       description: t('spec_suit_desc'),
-      img: "https://images.unsplash.com/photo-1594932224828-b4b05a83296c?q=80&w=800" 
+      img: "https://images.unsplash.com/photo-1594932224828-b4b05a83296c?q=80&w=800https://www.google.com/imgres?q=coupure%20de%20tissus%20impecable&imgurl=https%3A%2F%2Fwww.craftine.com%2Fblog%2Fwp-content%2Fuploads%2F2019%2F04%2F20190404_170007c2.jpg&imgrefurl=https%3A%2F%2Fwww.craftine.com%2Fblog%2Fsavoir-lire-un-plan-de-coupe-et-decoupe-du-tissu%2F&docid=KWslq4DtO_u21M&tbnid=SUuJeCkBCDbgBM&vet=12ahUKEwjf0Pnj5cmTAxXwXUEAHf4fMMIQnPAOegQIEhAB..i&w=1000&h=685&hcb=2&ved=2ahUKEwjf0Pnj5cmTAxXwXUEAHf4fMMIQnPAOegQIEhAB" 
     },
     { 
       title: t('spec_dress_title'), 

@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, Lock } from 'lucide-react';
 import { FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import logoSC from '../assets/S_C_mode-removebg-preview.png';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -12,23 +13,34 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
         
         {/* Colonne 1 - Logo */}
-        <div className="space-y-6 lg:col-span-1">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 bg-[#003366] rounded-full flex items-center justify-center text-white font-serif font-bold text-2xl shadow-lg group-hover:bg-[#004080] transition-colors">S</div>
-            <div>
-              <h2 className="text-2xl font-serif font-extrabold tracking-tight">
-                <span className="text-[#003366] dark:text-white">SOH</span> 
-                <span className="text-yellow-500 mx-1">&</span> 
-                <span className="text-[#003366] dark:text-white">CHANTAL</span>
-              </h2>
-              <p className="text-[10px] text-gray-400 tracking-[0.4em] uppercase font-bold">Atelier de Création</p>
-            </div>
-          </Link>
-          <p className="text-sm leading-relaxed italic">
-            L'élégance sur-mesure à Douala. L'union parfaite entre tradition et modernité.
-          </p>
-        </div>
+        <div className="space-y-2 lg:col-span-1">
+  {/* Sur mobile : flex-row (par défaut via items-center)
+      Sur grand écran (lg) : flex-col et on centre le texte 
+  */}
+  <Link to="/" className="flex flex-row lg:flex-col items-center lg:items-start gap-1 group">
+    <img 
+      src={logoSC} 
+      alt="Logo SOH & CHANTAL" 
+      className="w-auto h-34 object-contain transition-all duration-500 hover:scale-105"
+    />
+    
+    {/* Sur grand écran, on aligne le texte à gauche (ou centre selon ton choix) */}
+    <div className="lg:text-left">
+      <h2 className="text-2xl font-serif font-extrabold tracking-tight">
+        <span className="text-[#003366] dark:text-white">SOH</span> 
+        <span className="text-yellow-500 mx-1">&</span> 
+        <span className="text-[#003366] dark:text-white">CHANTAL</span>
+      </h2>
+      <p className="text-[10px] text-gray-400 tracking-[0.4em] uppercase font-bold">
+        Atelier de Création
+      </p>
+    </div>
+  </Link>
 
+  <p className="text-sm leading-relaxed italic">
+    L'élégance sur-mesure à Douala. L'union parfaite entre tradition et modernité.
+  </p>
+</div>
         {/* Colonne 2 - Navigation */}
         <div>
           <h3 className="text-[#003366] dark:text-yellow-600 font-bold uppercase tracking-widest text-xs mb-6">Navigation</h3>

@@ -53,6 +53,18 @@ const resources = {
       selected: "Sélectionné", 
       no_name: "Nouvelle Création",
 
+      testimonials_title: "Témoignages",
+testimonials_subtitle: "Ce que nos clients disent de nous",
+leave_review_btn: "Laisser un avis",
+close_form: "Fermer",
+form_name_placeholder: "Votre nom",
+form_rating_label: "Note",
+form_comment_placeholder: "Votre message...",
+submit_review: "Envoyer l'avis",
+review_success_msg: "Merci ! Votre avis est en attente de validation.",
+review_error_msg: "Une erreur est survenue lors de l'envoi.",
+no_testimonials_yet: "Aucun témoignage pour le moment.",
+
       // Spécialités
       spec_title: "Nos Spécialités",
       spec_subtitle: "L'excellence du geste au service de votre élégance",
@@ -80,8 +92,8 @@ const resources = {
         locaux_1: "Espace de coupe",
         locaux_2: "Showroom",
         locaux_3: "Zone de couture",
-        location_city: "Situé à Douala, Cameroun",
-        location_desc: "Un espace de 150m² dédié à la haute couture africaine.",
+        location_city: "Situé à shell, Douala, Cameroun",
+        location_desc: "Un espace dédié à la haute couture africaine.",
         team_section_title: "Nos Mains d'Or",
         role_senior: "Couturière Senior",
         role_embroidery: "Spécialiste Broderie",
@@ -132,8 +144,35 @@ const resources = {
   model_1: "Flore Signature Dress",
   model_2: "Chic Wax Set",
   model_3: "Modern Kaba",
-  model_4: "Chantal Suit"
+  model_4: "Chantal Suit",
+
+  // Contact Page
+
+  contact_title: "Restons en contact",
+contact_phone_label: "Téléphone",
+contact_email_label: "Email",
+contact_address_label: "Atelier",
+contact_form_subtitle: "Envoyez-nous un message",
+contact_btn_email: "Envoyer par Email",
+contact_btn_whatsapp: "Discuter sur WhatsApp",
+contact_wa_warn: "Veuillez entrer votre nom et un message.",
+contact_wa_intro: "Bonjour SOH & CHANTAL,",
+contact_success_msg: "✨ Message envoyé avec succès !",
+contact_error_msg: "Désolé, une erreur est survenue.",
+sending: "Envoi...",
 },
+
+testimonials_title: "Testimonials",
+testimonials_subtitle: "What our clients say about us",
+leave_review_btn: "Leave a Review",
+close_form: "Close",
+form_name_placeholder: "Your name",
+form_rating_label: "Rating",
+form_comment_placeholder: "Your message...",
+submit_review: "Submit Review",
+review_success_msg: "Thank you! Your review is pending approval.",
+review_error_msg: "An error occurred during submission.",
+no_testimonials_yet: "No testimonials yet.",
       
       faq_title: "Frequently Asked Questions",
       faq_q1: "What are your lead times for bespoke outfits?",
@@ -183,21 +222,31 @@ const resources = {
         locaux_1: "Cutting Area",
         locaux_2: "Showroom",
         locaux_3: "Sewing Zone",
-        location_city: "Located in Douala, Cameroon",
-        location_desc: "A 150sqm space dedicated to African haute couture.",
+        location_city: "Located in shell, Douala, Cameroon",
+        location_desc: "A space dedicated to African haute couture.",
         team_section_title: "Our Golden Hands",
         role_senior: "Senior Seamstress",
         role_embroidery: "Embroidery Specialist",
         role_modeliste: "Pattern Maker",
         role_finishing: "Finishing Specialist",
 
-
         info_main_title: "Information Center",
-
-        info_blog_title: "Welcome to the world of SOH & CHANTAL. Our designers share the secrets of African haute couture, from fabric selection to the latest trends in Douala. Follow our stories to understand the soul of our collections and learn how to enhance your outfits every day.",
-        info_privacy_title: "At SOH & CHANTAL, protecting your privacy is a priority. We only collect information necessary for processing your orders via WhatsApp. Your data is never shared with third parties and is used exclusively to provide you with a high-quality bespoke service.",
-
-        info_blog_text: "Discover the workshop's behind-the-scenes and fashion tips...",
+      info_blog_title: "Welcome to the world of SOH & CHANTAL...",
+      info_blog_text: "Discover the workshop's behind-the-scenes...",
+      info_privacy_title: "At SOH & CHANTAL, protecting your privacy is a priority...",
+ // Contact Page
+      contact_title: "Get in touch",
+contact_phone_label: "Phone",
+contact_email_label: "Email",
+contact_address_label: "Workshop",
+contact_form_subtitle: "Send us a message",
+contact_btn_email: "Send via Email",
+contact_btn_whatsapp: "Chat on WhatsApp",
+contact_wa_warn: "Please enter your name and a message.",
+contact_wa_intro: "Hello SOH & CHANTAL,",
+contact_success_msg: "✨ Message sent successfully!",
+contact_error_msg: "Sorry, an error occurred.",
+sending: "Sending...",
       }
     }
   }

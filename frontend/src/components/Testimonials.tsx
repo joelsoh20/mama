@@ -19,7 +19,7 @@ export default function Testimonials() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [formData, setFormData] = useState({ name: '', comment: '', rating: 5 });
 
-  // 1. Charger uniquement les témoignages validés (status: approved)
+  // 1. Charger uniquement les témoignages validés
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
@@ -38,13 +38,13 @@ export default function Testimonials() {
     try {
       await axios.post('http://localhost:5000/api/testimonials', {
         ...formData,
-        status: 'pending' // En attente de validation admin
+        status: 'pending' 
       });
       alert(t('review_success_msg'));
       setFormData({ name: '', comment: '', rating: 5 });
       setShowForm(false);
     } catch (error) {
-      alert(t('review_error_msg') || "Erreur lors de l'envoi.");
+      alert(t('review_error_msg')); // Utilisation de la clé de traduction
     } finally {
       setLoading(false);
     }
@@ -153,7 +153,7 @@ export default function Testimonials() {
             ))
           ) : (
             <p className="text-gray-400 italic col-span-full text-center">
-              {t('no_testimonials_yet') || "Aucun témoignage pour le moment."}
+              {t('no_testimonials_yet')}
             </p>
           )}
         </div>

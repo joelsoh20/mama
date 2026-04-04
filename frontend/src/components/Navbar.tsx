@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Moon, Sun, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
+import logoSC from '../assets/S_C_mode-removebg-preview.png';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,25 +32,37 @@ export default function Navbar() {
     { name: t('home'), path: '/' },
     { name: t('catalogue'), path: '/catalogue' },
      { name: t('MaSelection'), path: '/MaSelection' },
-    { name: t('atelier'), path: '/atelier' },
+    { name: t('atelier_nav'), path: '/atelier' },
     { name: t('contact'), path: '/contact' },
   ];
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${
-      isScrolled || isOpen ? 'bg-[#003366] py-4 shadow-xl' : 'bg-transparent py-6'
-    }`}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        
-        {/* LOGO */}
-        <Link to="/" className="flex flex-col z-[110]">
-          <span className="text-xl font-serif font-bold text-white tracking-widest uppercase">
-            SOH <span className="text-[#b8860b]">&</span> CHANTAL
-          </span>
-          <span className="text-[8px] text-[#b8860b] uppercase tracking-[0.5em] font-bold">
-            Atelier de Haute Couture
-          </span>
-        </Link>
+  // py-1 rend la bande très fine lors du scroll
+  isScrolled || isOpen ? 'bg-[#003366] py-1 shadow-xl' : 'bg-transparent py-3'
+}`}>
+  <div className="max-w-7xl mx-auto px-3 flex items-center justify-between">
+    
+    {/* LOGO - Ajustement de la taille du logo lors du scroll pour aider à la finesse */}
+    <Link to="/" className="flex flex-col items-center z-[110] transition-all duration-500">
+      <img 
+        src={logoSC} 
+        alt="Logo SOH & CHANTAL" 
+        // On réduit h-36 à h-20 (ou moins) quand on scroll pour que la barre puisse rétrécir
+        className={`${isScrolled ? 'h-20' : 'h-36'} w-auto object-contain transition-all duration-500 hover:scale-105`} 
+      />
+      
+      {/* Cacher le sous-titre au scroll pour gagner encore plus de place (Optionnel) */}
+      {!isScrolled && (
+        <motion.span 
+          initial={{ opacity: 1 }}
+          animate={{ opacity: isScrolled ? 0 : 1 }}
+          className="text-[8px] text-[#b8860b] uppercase tracking-[0.5em] font-bold mt-2"
+        >
+          Atelier de Haute Couture
+        </motion.span>
+      )}
+    </Link>
 
         {/* MENU DESKTOP */}
         <div className={`hidden md:flex items-center gap-8 font-bold text-[11px] uppercase tracking-[0.25em] transition-colors ${
