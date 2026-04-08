@@ -49,6 +49,7 @@ const Catalogue = () => {
       const productForSelection: Product = {
         id: item.id,
         name: item.description || "Modèle SOH & CHANTAL",
+        nameEn: item.descriptionEn || item.description || "Model SOH & CHANTAL",   // ← Correction ici
         image: item.images?.[0] || item.image || 'https://via.placeholder.com/400',
         price: Number(item.price) || 0,
         category: item.category || "Général",
