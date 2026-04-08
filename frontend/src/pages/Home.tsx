@@ -10,11 +10,10 @@ import { useTranslation } from 'react-i18next';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode } from 'swiper/modules';
 
-// Imports CSS Swiper corrigés (version propre et stable)
 import 'swiper/css';
 import 'swiper/css/free-mode';
 
-import img1 from '../assets/Presentation18.jpeg';
+import img1 from '../assets/Presentation15.jpeg';
 import img2 from '../assets/Presentation16.jpeg';
 import img3 from '../assets/Presentation12.jpeg';
 import img4 from '../assets/Presentation10.jpeg';
@@ -34,21 +33,21 @@ export default function Home() {
   const { t } = useTranslation();
 
   const creations = [
-    { id: 1, img: img1, key: "Bombers" },
-    { id: 2, img: img2, key: "Ensemble par dessus" },
-    { id: 3, img: img3, key: "Ensemble boubou chemise" },
-    { id: 4, img: img4, key: "Chemise" },
-    { id: 5, img: img5, key: "Ensemble veste et ensemble boubou" },
-    { id: 6, img: img6, key: "Ensemble boubou" },
-    { id: 7, img: img7, key: "Kaba" },
-    { id: 8, img: img8, key: "Tenu Traditionnel" },
-    { id: 9, img: img9, key: "veste pour enfant" },
+    { id: 1,  img: img1,  key: "Bombers" },
+    { id: 2,  img: img2,  key: "Ensemble par dessus" },
+    { id: 3,  img: img3,  key: "Ensemble boubou chemise" },
+    { id: 4,  img: img4,  key: "Chemise" },
+    { id: 5,  img: img5,  key: "Ensemble veste et ensemble boubou" },
+    { id: 6,  img: img6,  key: "Ensemble boubou" },
+    { id: 7,  img: img7,  key: "Kaba" },
+    { id: 8,  img: img8,  key: "Tenu Traditionnel" },
+    { id: 9,  img: img9,  key: "veste pour enfant" },
     { id: 10, img: img10, key: "robe mariage" },
-    { id: 14, img: img11, key: "Ensemble boubou et veste" },
-    { id: 11, img: img12, key: "Ensemble boubou" },
-    { id: 12, img: img13, key: "Veste dame" },
-    { id: 13, img: img14, key: "Ensemble boubou" },
-    { id: 14, img: img15, key: "Kaba" },
+    { id: 11, img: img11, key: "Ensemble boubou et veste" },
+    { id: 12, img: img12, key: "Ensemble boubou" },
+    { id: 13, img: img13, key: "Veste dame" },
+    { id: 14, img: img14, key: "Ensemble boubou" },
+    { id: 15, img: img15, key: "Kaba" },           // ← Correction : id unique
   ];
 
   return (
