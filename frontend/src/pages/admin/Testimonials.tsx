@@ -28,7 +28,7 @@ export default function AdminTestimonials() {
   const fetchTestimonials = async () => {
     try {
       // Note : On récupère TOUS les témoignages (approuvés ou non) pour l'admin
-      const res = await fetch('http://localhost:5000/api/testimonials', {
+      const res = await fetch('https://sc-mode.onrender.com/api/testimonials', {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -43,7 +43,7 @@ export default function AdminTestimonials() {
   const approve = async (id: number) => {
     try {
       // Correction de l'URL et de la méthode pour correspondre au backend (PATCH)
-      await fetch(`http://localhost:5000/api/testimonials/approve/${id}`, {
+      await fetch(`https://sc-mode.onrender.com/api/testimonials/approve/${id}`, {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -56,7 +56,7 @@ export default function AdminTestimonials() {
   const deleteTestimonial = async (id: number) => {
     if (!confirm('Supprimer définitivement ce témoignage ?')) return;
     try {
-      await fetch(`http://localhost:5000/api/testimonials/${id}`, {
+      await fetch(`https://sc-mode.onrender.com/api/testimonials/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });

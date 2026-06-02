@@ -24,7 +24,7 @@ export default function Contact() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/contact', formData);
+      await axios.post('https://sc-mode.onrender.com/api/contact', formData);
       toast.success(t('contact_success_msg'));
       setFormData({ name: '', email: '', message: '' });
     } catch (err) {

@@ -30,7 +30,7 @@ const Catalogue = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/products');
+        const res = await axios.get('https://sc-mode.onrender.com/api/products');
         setDbProducts(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Erreur de chargement du catalogue");

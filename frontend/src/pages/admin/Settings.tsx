@@ -24,7 +24,7 @@ const Settings = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      await axios.put('http://localhost:5000/api/auth/update-password', 
+      await axios.put('https://sc-mode.onrender.com/api/auth/update-password', 
         { oldPassword: passwords.old, newPassword: passwords.new },
         { headers: { Authorization: `Bearer ${token}` }}
       );

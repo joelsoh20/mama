@@ -26,7 +26,7 @@ const AddProductForm = () => {
 
     try {
       const token = localStorage.getItem('token'); // On récupère ton JWT
-      await axios.post('http://localhost:5000/api/products/add', data, {
+      await axios.post('https://sc-mode.onrender.com/api/products/add', data, {
         headers: { 
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}` 

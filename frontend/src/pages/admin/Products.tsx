@@ -32,7 +32,7 @@ const Product = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/products');
+      const res = await axios.get('https://sc-mode.onrender.com/api/products');
       setProducts(res.data);
     } catch (err) {
       console.error("Erreur chargement catalogue");
@@ -59,7 +59,7 @@ const Product = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.post('http://localhost:5000/api/products', data, {
+      await axios.post('https://sc-mode.onrender.com/api/products', data, {
         headers: { 
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data' 
@@ -81,7 +81,7 @@ const Product = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.delete(`http://localhost:5000/api/products/${id}`, {
+      await axios.delete(`https://sc-mode.onrender.com/api/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Produit retiré.");
