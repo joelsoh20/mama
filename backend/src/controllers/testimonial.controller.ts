@@ -27,13 +27,11 @@ export const getAllTestimonials = async (req: Request, res: Response) => {
 // 3. Créer un témoignage (Public)
 export const createTestimonial = async (req: Request, res: Response) => {
   try {
-    // Correction : On récupère 'comment' (envoyé par le front) 
-    // mais on l'enregistre dans 'message' (ton modèle Sequelize actuel)
     const { name, comment, message, rating, avatar } = req.body;
     
     const testimonial = await Testimonial.create({
       name,
-      message: message || comment, // Supporte les deux noms au cas où
+      message: message || comment,
       rating: rating ? Number(rating) : 5,
       avatar,
       isApproved: false, 
@@ -48,7 +46,7 @@ export const createTestimonial = async (req: Request, res: Response) => {
 // 4. Approuver un témoignage (Admin)
 export const approveTestimonial = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params; 
+    const { id } = req.params as { id: string };  // ✅ CORRIGÉ
     const testimonial = await Testimonial.findByPk(id);
     
     if (!testimonial) return res.status(404).json({ message: 'Témoignage non trouvé' });
@@ -56,14 +54,14 @@ export const approveTestimonial = async (req: Request, res: Response) => {
     await testimonial.update({ isApproved: true });
     res.json({ message: 'Témoignage approuvé avec succès', testimonial });
   } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de l’approbation' });
+    res.status(500).json({ message: 'Erreur lors de l\'approbation' });
   }
 };
 
 // 5. Supprimer un témoignage (Admin)
 export const deleteTestimonial = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };  // ✅ CORRIGÉ
     const testimonial = await Testimonial.findByPk(id);
     
     if (!testimonial) return res.status(404).json({ message: 'Témoignage non trouvé' });

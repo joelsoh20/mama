@@ -1,14 +1,11 @@
 import { Request, Response } from 'express';
 import { Product } from '../models/Product';
 import cloudinary from '../config/cloudinary';
-import { upload } from '../utils/upload'; // Ton utilitaire Multer
+import { upload } from '../utils/upload';
 
 // --- 1. EXPORT DU MIDDLEWARE POUR LES ROUTES ---
 export const uploadImages = upload.array('images', 5);
 
-/**
- * Helper pour envoyer les photos vers Cloudinary
- */
 const uploadToCloudinary = async (file: Express.Multer.File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
@@ -35,7 +32,6 @@ export const getAllProducts = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    // Retrait de 'price' de la déstructuration
     const { description, descriptionEn, category } = req.body;
     const files = req.files as Express.Multer.File[];
 
@@ -45,7 +41,6 @@ export const createProduct = async (req: Request, res: Response) => {
 
     const imageUrls = await Promise.all(files.map(file => uploadToCloudinary(file)));
 
-    // Création sans le champ price
     const product = await Product.create({
       description,
       descriptionEn,
@@ -63,11 +58,10 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };  // ✅ CORRIGÉ
     const product = await Product.findByPk(id);
     if (!product) return res.status(404).json({ message: 'Produit non trouvé' });
 
-    // Retrait de 'price' ici également
     const { description, descriptionEn, category, isActive } = req.body;
     const files = req.files as Express.Multer.File[] | undefined;
 
@@ -78,7 +72,6 @@ export const updateProduct = async (req: Request, res: Response) => {
       imageUrls = [...imageUrls, ...newUrls];
     }
 
-    // Mise à jour sans le champ price
     await product.update({
       description,
       descriptionEn,
@@ -95,7 +88,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };  // ✅ CORRIGÉ
     const product = await Product.findByPk(id);
     if (!product) return res.status(404).json({ message: 'Produit non trouvé' });
 
