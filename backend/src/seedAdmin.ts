@@ -1,5 +1,5 @@
-import { AdminUser } from './src/models/AdminUser';
-import { sequelize } from './src/config/database';
+import { AdminUser } from './models/AdminUser';
+import { sequelize } from './config/database';
 
 const resetAdmin = async () => {
   try {
