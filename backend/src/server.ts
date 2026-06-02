@@ -21,7 +21,7 @@ app.use(helmet());
 
 // CONFIGURATION CORS MISE À JOUR
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174','https://scmode.netlify.app'],
+  origin: ['http://localhost:5173','https://scmode.netlify.app'],
   credentials: true,
   // Ajout de 'PATCH' ici pour permettre l'approbation des témoignages
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], 

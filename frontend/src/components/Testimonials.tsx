@@ -23,7 +23,7 @@ export default function Testimonials() {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/testimonials/approved');
+        const response = await axios.get('https://sc-mode.onrender.com/api/testimonials/approved');
         setTestimonials(response.data);
       } catch (error) {
         console.error("Erreur lors du chargement des témoignages", error);
@@ -36,7 +36,7 @@ export default function Testimonials() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/testimonials', {
+      await axios.post('https://sc-mode.onrender.com/api/testimonials', {
         ...formData,
         status: 'pending' 
       });
