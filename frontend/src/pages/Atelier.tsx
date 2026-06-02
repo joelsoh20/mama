@@ -9,8 +9,7 @@ import photoChantal from '../assets/photoChantal.jpeg';
 import Couturier1 from '../assets/Couturier1.jpeg';
 import Couturiere3 from '../assets/Couturiere3.jpeg';
 import Couturiere2 from '../assets/Couturiere2.jpeg';
-import Couturiere4 from '../assets/Couturiere4.jpeg';
-
+import Couturiere4 from "../assets/couturiere4.jpeg";
 import locaux1 from '../assets/Presentation25.jpeg';
 import locaux2 from '../assets/Presentation23.jpeg';
 import locaux3 from '../assets/Presentation19.jpeg';
