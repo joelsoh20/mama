@@ -85,32 +85,18 @@ app.get('/', (req, res) => {
   res.json({ message: 'Atelier SOH & CHANTAL - API opérationnelle ✅' });
 });
 
-// Route temporaire pour créer l'admin - À SUPPRIMER APRÈS USAGE
-app.get('/api/setup', async (req, res) => {
-  try {
-    const bcrypt = require('bcryptjs');
-    const { AdminUser } = require('./models/AdminUser');
-    
-    const existing = await AdminUser.findOne({ where: { email: 'sohflore44@gmail.com' } });
-    
-    if (existing) {
-      return res.json({ message: 'Admin existe déjà', email: existing.email });
-    }
-    
-    const hash = await bcrypt.hash('admin123', 10);
-    const admin = await AdminUser.create({
-      name: 'Soh Flore',
-      email: 'sohflore44@gmail.com',
-      password: hash,
-      role: 'super_admin'
-    });
-    
-    res.json({ message: '✅ Admin créé avec succès !', email: admin.email });
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
-  }
+// Route TEMPORAIRE de vérification
+app.get('/api/auth/check-admin', async (req, res) => {
+  const { AdminUser } = require('./models/AdminUser');
+  const admin = await AdminUser.findOne({ where: { email: 'sohflore44@gmail.com' } });
+  if (!admin) return res.json({ error: 'Admin non trouvé' });
+  res.json({
+    name: admin.name,
+    email: admin.email,
+    passwordHash: admin.password.substring(0, 20) + '...',
+    role: admin.role
+  });
 });
-
 // --- 5. LANCEMENT ---
 const startServer = async () => {
   try {
