@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, Unique, BeforeCreate } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, Unique, BeforeCreate, BeforeUpdate } from 'sequelize-typescript';
 import bcrypt from 'bcryptjs';
 
 @Table({ tableName: 'admin_users', timestamps: true })
@@ -21,7 +21,7 @@ export class AdminUser extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
-  declare password: string; // Le mot "declare" est crucial ici pour TS >= 4.0
+  declare password: string;
 
   @Column({
     type: DataType.STRING,
@@ -35,9 +35,11 @@ export class AdminUser extends Model {
   })
   declare role: string;
 
+  // ✅ Hash seulement si le mot de passe n'est pas déjà hashé
   @BeforeCreate
+  @BeforeUpdate
   static async hashPassword(admin: AdminUser) {
-    if (admin.password) {
+    if (admin.changed('password') && admin.password && !admin.password.startsWith('$2')) {
       const salt = await bcrypt.genSalt(10);
       admin.password = await bcrypt.hash(admin.password, salt);
     }

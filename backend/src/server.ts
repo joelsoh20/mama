@@ -86,16 +86,25 @@ app.get('/', (req, res) => {
 });
 
 // Route TEMPORAIRE de vérification
-app.get('/api/auth/check-admin', async (req, res) => {
-  const { AdminUser } = require('./models/AdminUser');
-  const admin = await AdminUser.findOne({ where: { email: 'sohflore44@gmail.com' } });
-  if (!admin) return res.json({ error: 'Admin non trouvé' });
-  res.json({
-    name: admin.name,
-    email: admin.email,
-    passwordHash: admin.password.substring(0, 20) + '...',
-    role: admin.role
-  });
+app.get('/api/setup', async (req, res) => {
+  try {
+    const { AdminUser } = require('./models/AdminUser');
+    
+    // Supprimer l'ancien admin
+    await AdminUser.destroy({ where: { email: 'sohflore44@gmail.com' } });
+    
+    // Maintenant le BeforeCreate est corrigé, le mot de passe sera hashé une seule fois
+    const admin = await AdminUser.create({
+      name: 'Soh Flore',
+      email: 'sohflore44@gmail.com',
+      password: 'admin123', // ← mot de passe EN CLAIR, le hook le hashera
+      role: 'super_admin'
+    });
+
+    res.json({ message: '✅ Admin recréé !', email: admin.email });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
 });
 // --- 5. LANCEMENT ---
 const startServer = async () => {
