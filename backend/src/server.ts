@@ -85,27 +85,6 @@ app.get('/', (req, res) => {
   res.json({ message: 'Atelier SOH & CHANTAL - API opérationnelle ✅' });
 });
 
-// Route TEMPORAIRE de vérification
-app.get('/api/setup', async (req, res) => {
-  try {
-    const { AdminUser } = require('./models/AdminUser');
-    
-    // Supprimer l'ancien admin
-    await AdminUser.destroy({ where: { email: 'sohflore44@gmail.com' } });
-    
-    // Maintenant le BeforeCreate est corrigé, le mot de passe sera hashé une seule fois
-    const admin = await AdminUser.create({
-      name: 'Soh Flore',
-      email: 'sohflore44@gmail.com',
-      password: 'admin123', // ← mot de passe EN CLAIR, le hook le hashera
-      role: 'super_admin'
-    });
-
-    res.json({ message: '✅ Admin recréé !', email: admin.email });
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
-  }
-});
 // --- 5. LANCEMENT ---
 const startServer = async () => {
   try {
