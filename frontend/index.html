@@ -31,6 +31,17 @@
     <!-- Thème de couleur pour la barre d'adresse mobile -->
     <meta name="theme-color" content="#000000" />
     <meta name="msapplication-TileColor" content="#000000" />
+
+    <!-- Applique le thème sombre/clair avant le premier rendu pour éviter un flash -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.classList.toggle('dark', dark);
+        } catch (e) {}
+      })();
+    </script>
     
     <title>SC Mode</title>
   </head>

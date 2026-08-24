@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, Trash2, MessageSquare } from 'lucide-react';
+import { ENDPOINTS } from '../../lib/endpoints';
 
 interface Testimonial {
   id: number;
   name: string;
-  message: string;
+  comment: string;
   rating: number;
   isApproved: boolean;
 }
@@ -17,18 +18,10 @@ export default function AdminTestimonials() {
   // Vérifie bien que tu utilises 'adminToken' partout pour le stockage
   const token = localStorage.getItem('adminToken');
 
-  useEffect(() => {
-    if (!token) {
-      navigate('/admin/login');
-    } else {
-      fetchTestimonials();
-    }
-  }, [token, navigate]);
-
-  const fetchTestimonials = async () => {
+  const fetchTestimonials = useCallback(async () => {
     try {
       // Note : On récupère TOUS les témoignages (approuvés ou non) pour l'admin
-      const res = await fetch('https://sc-mode.onrender.com/api/testimonials', {
+      const res = await fetch(ENDPOINTS.testimonials.all, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -38,17 +31,28 @@ export default function AdminTestimonials() {
       console.error("Erreur chargement témoignages:", err);
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/admin/login');
+      return;
+    }
+    // fetchTestimonials is also reused by approve()/deleteTestimonial() to refresh the list,
+    // so it can't be inlined into this effect the way a mount-only fetch normally would be.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchTestimonials();
+  }, [token, navigate, fetchTestimonials]);
 
   const approve = async (id: number) => {
     try {
       // Correction de l'URL et de la méthode pour correspondre au backend (PATCH)
-      await fetch(`https://sc-mode.onrender.com/api/testimonials/approve/${id}`, {
+      await fetch(ENDPOINTS.testimonials.approve(id), {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchTestimonials(); // Rafraîchir la liste
-    } catch (err) {
+    } catch {
       alert("Erreur lors de l'approbation");
     }
   };
@@ -56,12 +60,12 @@ export default function AdminTestimonials() {
   const deleteTestimonial = async (id: number) => {
     if (!confirm('Supprimer définitivement ce témoignage ?')) return;
     try {
-      await fetch(`https://sc-mode.onrender.com/api/testimonials/${id}`, {
+      await fetch(ENDPOINTS.testimonials.byId(id), {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchTestimonials();
-    } catch (err) {
+    } catch {
       alert("Erreur lors de la suppression");
     }
   };
@@ -95,7 +99,7 @@ export default function AdminTestimonials() {
                       <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-bold uppercase">En attente</span>
                     )}
                   </div>
-                  <p className="text-gray-700 dark:text-gray-300 italic mb-2">"{t.message}"</p>
+                  <p className="text-gray-700 dark:text-gray-300 italic mb-2">"{t.comment}"</p>
                   <p className="font-bold text-sm">— {t.name}</p>
                 </div>
 

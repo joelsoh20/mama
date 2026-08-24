@@ -24,7 +24,7 @@ import AdminLogin from './pages/admin/Login';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminProducts from './pages/admin/Products';
 import AdminTestimonials from './pages/admin/Testimonials';
-import AddProductForm from './pages/admin/AddProductForm';
+import AdminClientPhotos from './pages/admin/ClientPhotos';
 import Settings from './pages/admin/Settings';
 
 function App() {
@@ -56,7 +56,7 @@ function App() {
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/products" element={<AdminProducts />} />
             <Route path="/admin/testimonials" element={<AdminTestimonials />} />
-            <Route path="/admin/add-product" element={<AddProductForm />} />
+            <Route path="/admin/client-photos" element={<AdminClientPhotos />} />
             <Route path="/admin/settings" element={<Settings />} />
           </Routes>
         </main>

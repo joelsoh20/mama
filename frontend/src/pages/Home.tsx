@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Hero from '../components/Hero';
 import Specialties from '../components/Specialties';
 import Testimonials from '../components/Testimonials';
@@ -6,6 +8,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ENDPOINTS } from '../lib/endpoints';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode } from 'swiper/modules';
@@ -29,36 +32,61 @@ import img13 from '../assets/Presentation4.jpeg';
 import img14 from '../assets/Presentation17.jpeg';
 import img15 from '../assets/Presentation20.jpeg';
 
+// Photos par défaut, affichées tant qu'aucune photo cliente n'a été ajoutée depuis l'admin.
+const fallbackCreations = [
+  { id: 'fallback-1',  img: img1,  key: "Bombers" },
+  { id: 'fallback-2',  img: img2,  key: "Ensemble par dessus" },
+  { id: 'fallback-3',  img: img3,  key: "Ensemble boubou chemise" },
+  { id: 'fallback-4',  img: img4,  key: "Chemise" },
+  { id: 'fallback-5',  img: img5,  key: "Ensemble veste et ensemble boubou" },
+  { id: 'fallback-6',  img: img6,  key: "Ensemble boubou" },
+  { id: 'fallback-7',  img: img7,  key: "Kaba" },
+  { id: 'fallback-8',  img: img8,  key: "Tenu Traditionnel" },
+  { id: 'fallback-9',  img: img9,  key: "veste pour enfant" },
+  { id: 'fallback-10', img: img10, key: "robe mariage" },
+  { id: 'fallback-11', img: img11, key: "Ensemble boubou et veste" },
+  { id: 'fallback-12', img: img12, key: "Ensemble boubou" },
+  { id: 'fallback-13', img: img13, key: "Veste dame" },
+  { id: 'fallback-14', img: img14, key: "Ensemble boubou" },
+  { id: 'fallback-15', img: img15, key: "Kaba" },
+];
+
+interface ClientPhoto {
+  id: number;
+  imageUrl: string;
+  caption: string | null;
+}
+
 export default function Home() {
   const { t } = useTranslation();
+  const [clientPhotos, setClientPhotos] = useState<ClientPhoto[]>([]);
 
-  const creations = [
-    { id: 1,  img: img1,  key: "Bombers" },
-    { id: 2,  img: img2,  key: "Ensemble par dessus" },
-    { id: 3,  img: img3,  key: "Ensemble boubou chemise" },
-    { id: 4,  img: img4,  key: "Chemise" },
-    { id: 5,  img: img5,  key: "Ensemble veste et ensemble boubou" },
-    { id: 6,  img: img6,  key: "Ensemble boubou" },
-    { id: 7,  img: img7,  key: "Kaba" },
-    { id: 8,  img: img8,  key: "Tenu Traditionnel" },
-    { id: 9,  img: img9,  key: "veste pour enfant" },
-    { id: 10, img: img10, key: "robe mariage" },
-    { id: 11, img: img11, key: "Ensemble boubou et veste" },
-    { id: 12, img: img12, key: "Ensemble boubou" },
-    { id: 13, img: img13, key: "Veste dame" },
-    { id: 14, img: img14, key: "Ensemble boubou" },
-    { id: 15, img: img15, key: "Kaba" },           // ← Correction : id unique
-  ];
+  useEffect(() => {
+    const fetchClientPhotos = async () => {
+      try {
+        const res = await axios.get(ENDPOINTS.clientPhotos.list);
+        setClientPhotos(Array.isArray(res.data) ? res.data : []);
+      } catch {
+        console.error("Erreur de chargement des photos clientes");
+      }
+    };
+    fetchClientPhotos();
+  }, []);
+
+  // Tant qu'aucune photo n'a été ajoutée depuis l'admin, on affiche les photos par défaut.
+  const creations = clientPhotos.length > 0
+    ? clientPhotos.map((photo) => ({ id: photo.id, img: photo.imageUrl, key: null, caption: photo.caption }))
+    : fallbackCreations;
 
   return (
-    <div className="bg-[#faf9f6] text-[#003366]">
+    <div className="bg-[#faf9f6] dark:bg-neutral-950 text-[#003366] dark:text-white transition-colors duration-300">
       <Hero />
 
       <div className="relative z-10 -mt-10">
          <Specialties />
       </div>
 
-      <section className="py-32 bg-[#f3f1eb] overflow-hidden">
+      <section className="py-32 bg-[#f3f1eb] dark:bg-neutral-900 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           {/* En-tête */}
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
@@ -69,12 +97,12 @@ export default function Home() {
                   {t('section_creations_badge')}
                 </span>
               </div>
-              <h2 className="text-5xl md:text-6xl font-serif text-[#003366] leading-tight">
+              <h2 className="text-5xl md:text-6xl font-serif text-[#003366] dark:text-white leading-tight">
                 {t('section_creations_title')} <span className="italic">{t('section_creations_italic')}</span>
               </h2>
             </motion.div>
 
-            <Link to="/catalogue" className="group flex items-center gap-3 font-bold text-xs uppercase tracking-[0.2em] text-[#003366] border-b border-[#b8860b] pb-2">
+            <Link to="/catalogue" className="group flex items-center gap-3 font-bold text-xs uppercase tracking-[0.2em] text-[#003366] dark:text-white border-b border-[#b8860b] pb-2">
               {t('section_creations_link')} <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
             </Link>
           </div>
@@ -105,24 +133,31 @@ export default function Home() {
             }}
             className="creations-swiper-clean"
           >
-            {creations.map((item) => (
+            {creations.map((item) => {
+              const label = item.key
+                ? t(`atelier.creations.${item.key}`)
+                : (item.caption || '');
+              return (
               <SwiperSlide key={item.id}>
                 <div className="group relative">
-                  <div className="aspect-[3/4] overflow-hidden rounded-sm bg-neutral-200">
-                    <img 
-                      src={item.img} 
-                      className="w-full h-full object-cover transition-all duration-700" 
-                      alt={t(`atelier.creations.${item.key}`)} 
+                  <div className="aspect-[3/4] overflow-hidden rounded-sm bg-neutral-200 dark:bg-neutral-800">
+                    <img
+                      src={item.img}
+                      className="w-full h-full object-cover transition-all duration-700"
+                      alt={label}
                     />
+                    {label && (
                     <div className="absolute inset-0 bg-[#003366]/40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center p-4">
                       <p className="text-white text-[10px] uppercase tracking-[0.2em] font-bold border-b border-white/50 pb-1">
-                        {t(`atelier.creations.${item.key}`)}
+                        {label}
                       </p>
                     </div>
+                    )}
                   </div>
                 </div>
               </SwiperSlide>
-            ))}
+              );
+            })}
           </Swiper>
         </div>
 
@@ -141,7 +176,7 @@ export default function Home() {
 
       <Testimonials />
       
-      <section className="bg-[#f2f0eb] py-24">
+      <section className="bg-[#f2f0eb] dark:bg-neutral-900 py-24">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <FAQ />
         </div>

@@ -9,7 +9,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onAdd }: ProductCardProps) {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const currentName = i18n.language === 'fr' ? product.name : product.nameEn;
 
   return (

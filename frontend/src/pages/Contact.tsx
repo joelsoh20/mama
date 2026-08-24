@@ -4,6 +4,7 @@ import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ENDPOINTS } from '../lib/endpoints';
 
 export default function Contact() {
   const { t } = useTranslation();
@@ -24,10 +25,10 @@ export default function Contact() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('https://sc-mode.onrender.com/api/contact', formData);
+      await axios.post(ENDPOINTS.contact, formData);
       toast.success(t('contact_success_msg'));
       setFormData({ name: '', email: '', message: '' });
-    } catch (err) {
+    } catch {
       toast.error(t('contact_error_msg'));
     } finally {
       setLoading(false);

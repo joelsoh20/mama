@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { Star, Send, Quote } from 'lucide-react';
+import { ENDPOINTS } from '../lib/endpoints';
 
 interface Testimonial {
   id: string;
@@ -23,8 +24,8 @@ export default function Testimonials() {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const response = await axios.get('https://sc-mode.onrender.com/api/testimonials/approved');
-        setTestimonials(response.data);
+        const response = await axios.get(ENDPOINTS.testimonials.approved);
+        setTestimonials(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error("Erreur lors du chargement des témoignages", error);
       }
@@ -36,14 +37,14 @@ export default function Testimonials() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('https://sc-mode.onrender.com/api/testimonials', {
+      await axios.post(ENDPOINTS.testimonials.create, {
         ...formData,
         status: 'pending' 
       });
       alert(t('review_success_msg'));
       setFormData({ name: '', comment: '', rating: 5 });
       setShowForm(false);
-    } catch (error) {
+    } catch {
       alert(t('review_error_msg')); // Utilisation de la clé de traduction
     } finally {
       setLoading(false);

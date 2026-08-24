@@ -15,7 +15,12 @@ export default function CookieBanner() {
   }, []);
 
   const accept = () => {
-    localStorage.setItem('cookie-consent', 'true');
+    localStorage.setItem('cookie-consent', 'accepted');
+    setShow(false);
+  };
+
+  const refuse = () => {
+    localStorage.setItem('cookie-consent', 'refused');
     setShow(false);
   };
 
@@ -29,7 +34,7 @@ export default function CookieBanner() {
           className="fixed bottom-6 left-6 right-6 z-[100] md:left-auto md:right-10 md:max-w-md"
         >
           <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-6 shadow-2xl rounded-2xl relative">
-            <button onClick={() => setShow(false)} className="absolute top-4 right-4 opacity-50 hover:opacity-100">
+            <button onClick={refuse} className="absolute top-4 right-4 opacity-50 hover:opacity-100">
               <X size={18} />
             </button>
             
@@ -46,7 +51,7 @@ export default function CookieBanner() {
                   <button onClick={accept} className="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-lg transition-transform active:scale-95">
                     Accepter
                   </button>
-                  <button onClick={() => setShow(false)} className="text-xs font-bold uppercase tracking-widest px-4 py-3 hover:underline">
+                  <button onClick={refuse} className="text-xs font-bold uppercase tracking-widest px-4 py-3 hover:underline">
                     Refuser
                   </button>
                 </div>

@@ -35,7 +35,7 @@ export default function MaSelection() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-750 pt-46 pb-20 px-6">
+    <div className="min-h-screen bg-white dark:bg-neutral-900 pt-46 pb-20 px-6">
       <div className="max-w-4xl mx-auto">
         
         {/* EN-TÊTE */}

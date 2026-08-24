@@ -25,7 +25,7 @@ export const FAQ = () => {
           {faqIndexes.map((index) => (
             <div 
               key={index} 
-              className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-750 rounded-xl overflow-hidden shadow-sm"
+              className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 rounded-xl overflow-hidden shadow-sm"
             >
               <button 
                 onClick={() => setActive(active === index ? null : index)}

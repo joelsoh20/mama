@@ -1,13 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelection, type Product } from '../hooks/useSelection';
-import { Heart, CheckCircle, Filter, ShoppingBag } from 'lucide-react'; 
+import { Heart, CheckCircle, Filter, ShoppingBag } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion'; 
+import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import { ENDPOINTS } from '../lib/endpoints';
+
+interface DbProduct {
+  id: number;
+  description: string;
+  descriptionEn: string;
+  category: string;
+  images: string[];
+}
 
 const Catalogue = () => {
-  const [dbProducts, setDbProducts] = useState<any[]>([]);
+  const [dbProducts, setDbProducts] = useState<DbProduct[]>([]);
   const [filter, setFilter] = useState('Tous');
   const { addToSelection, removeFromSelection, selection } = useSelection();
   const { t, i18n } = useTranslation();
@@ -30,16 +39,16 @@ const Catalogue = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('https://sc-mode.onrender.com/api/products');
+        const res = await axios.get(ENDPOINTS.products.list);
         setDbProducts(Array.isArray(res.data) ? res.data : []);
-      } catch (err) {
+      } catch {
         console.error("Erreur de chargement du catalogue");
       }
     };
     fetchProducts();
   }, []);
 
-  const handleToggleSelection = (item: any) => {
+  const handleToggleSelection = (item: DbProduct) => {
     if (!item) return;
     const isSelected = selection.some(s => s.id === item.id);
 
@@ -50,8 +59,8 @@ const Catalogue = () => {
         id: item.id,
         name: item.description || "Modèle SOH & CHANTAL",
         nameEn: item.descriptionEn || item.description || "Model SOH & CHANTAL",   // ← Correction ici
-        image: item.images?.[0] || item.image || 'https://via.placeholder.com/400',
-        price: Number(item.price) || 0,
+        image: item.images?.[0] || 'https://via.placeholder.com/400',
+        price: 0,
         category: item.category || "Général",
       };
       addToSelection(productForSelection);

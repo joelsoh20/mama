@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Trash2 } from 'lucide-react';
+import { ENDPOINTS } from '../../lib/endpoints';
+
+interface DbProduct {
+  id: number;
+  category: string;
+  description: string;
+  descriptionEn: string;
+  images: string[];
+}
 
 const Product = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +19,7 @@ const Product = () => {
     // Le champ price a été retiré ici
   });
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<DbProduct[]>([]);
   const [loading, setLoading] = useState(false);
 
   const categories = [
@@ -32,9 +41,9 @@ const Product = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get('https://sc-mode.onrender.com/api/products');
-      setProducts(res.data);
-    } catch (err) {
+      const res = await axios.get(ENDPOINTS.products.list);
+      setProducts(Array.isArray(res.data) ? res.data : []);
+    } catch {
       console.error("Erreur chargement catalogue");
     }
   };
@@ -59,7 +68,7 @@ const Product = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.post('https://sc-mode.onrender.com/api/products', data, {
+      await axios.post(ENDPOINTS.products.list, data, {
         headers: { 
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data' 
@@ -69,7 +78,7 @@ const Product = () => {
       setFormData({ category: 'Boubou', description: '', descriptionEn: '' });
       setSelectedFiles([]);
       fetchProducts();
-    } catch (err: any) {
+    } catch {
       alert("Erreur lors de l'envoi.");
     } finally {
       setLoading(false);
@@ -81,12 +90,12 @@ const Product = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.delete(`https://sc-mode.onrender.com/api/products/${id}`, {
+      await axios.delete(ENDPOINTS.products.byId(id), {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Produit retiré.");
       fetchProducts();
-    } catch (err) {
+    } catch {
       alert("Erreur lors de la suppression.");
     }
   };

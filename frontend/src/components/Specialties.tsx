@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { Star, Send, X } from 'lucide-react';
+import { ENDPOINTS } from '../lib/endpoints';
 
 export default function Specialties() {
   const { t } = useTranslation();
@@ -42,7 +43,7 @@ export default function Specialties() {
     setLoading(true);
     try {
       // Envoi au backend avec statut 'pending' pour modération admin
-      await axios.post('http://localhost:5000/api/testimonials', {
+      await axios.post(ENDPOINTS.testimonials.create, {
         ...formData,
         status: 'pending'
       });
@@ -58,7 +59,7 @@ export default function Specialties() {
   };
 
   return (
-    <section className="py-24 bg-white dark:bg-neutral-750 px-6 overflow-hidden">
+    <section className="py-24 bg-white dark:bg-neutral-900 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
@@ -159,7 +160,7 @@ export default function Specialties() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
               />
               
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-750 via-neutral-750/20 to-transparent opacity-90 transition-opacity group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/20 to-transparent opacity-90 transition-opacity group-hover:opacity-100" />
               
               <div className="absolute bottom-8 left-8 right-8 transition-transform duration-500">
                 <span className="text-[#b8860b] text-[10px] uppercase tracking-[0.3em] font-black mb-3 block">

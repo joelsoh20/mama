@@ -1,17 +1,9 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Info, BookOpen, ShieldCheck, FileText, Map } from 'lucide-react';
+import { Info } from 'lucide-react';
 
 export default function Informations() {
   const { t } = useTranslation();
-
-  const sections = [
-    { id: 'blog', icon: <BookOpen className="text-blue-500" />, title: t('info_blog_title'), content: t('info_blog_text') },
-    { id: 'privacy', icon: <ShieldCheck className="text-green-500" />, title: t('info_privacy_title'), content: t('info_privacy_text') },
-    { id: 'terms', icon: <FileText className="text-orange-500" />, title: t('info_terms_title'), content: t('info_terms_text') },
-    { id: 'sitemap', icon: <Map className="text-purple-500" />, title: t('info_sitemap_title'), content: t('info_sitemap_text') },
-  ];
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900 pt-32 pb-20 px-6 transition-colors duration-300">

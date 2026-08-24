@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { Lock, Store, ShieldCheck, Edit2, Check, X } from 'lucide-react';
+import { ENDPOINTS } from '../../lib/endpoints';
 
 const Settings = () => {
   const [passwords, setPasswords] = useState({ old: '', new: '', confirm: '' });
@@ -16,21 +17,21 @@ const Settings = () => {
     ville: "Douala, Cameroun"
   });
 
-  const handlePasswordChange = async (e: any) => {
+  const handlePasswordChange = async (e: FormEvent) => {
     e.preventDefault();
     if (passwords.new !== passwords.confirm) {
       return toast.error("Les nouveaux mots de passe ne correspondent pas");
     }
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      await axios.put('https://sc-mode.onrender.com/api/auth/update-password', 
+      const token = localStorage.getItem('adminToken');
+      await axios.put(ENDPOINTS.auth.updatePassword,
         { oldPassword: passwords.old, newPassword: passwords.new },
         { headers: { Authorization: `Bearer ${token}` }}
       );
       toast.success("Mot de passe mis à jour !");
       setPasswords({ old: '', new: '', confirm: '' });
-    } catch (err: any) {
+    } catch {
       toast.error("Erreur : Vérifiez votre ancien mot de passe");
     } finally {
       setLoading(false);
@@ -95,23 +96,25 @@ const Settings = () => {
             </div>
 
             <div className="space-y-5">
-              {[
-                { label: "Nom commercial", key: "nom" },
-                { label: "Propriétaire", key: "proprietaire" },
-                { label: "Téléphone / WhatsApp", key: "telephone" },
-                { label: "Localisation", key: "ville" }
-              ].map((item) => (
+              {(
+                [
+                  { label: "Nom commercial", key: "nom" },
+                  { label: "Propriétaire", key: "proprietaire" },
+                  { label: "Téléphone / WhatsApp", key: "telephone" },
+                  { label: "Localisation", key: "ville" }
+                ] as const
+              ).map((item) => (
                 <div key={item.key} className="border-b border-white/10 pb-2">
                   <p className="text-xs text-gray-400 uppercase tracking-wider">{item.label}</p>
                   {isEditing ? (
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       className="bg-white/10 border border-white/20 rounded px-2 py-1 w-full mt-1 outline-none focus:border-[#b8860b]"
-                      value={(atelierInfos as any)[item.key]}
+                      value={atelierInfos[item.key]}
                       onChange={(e) => setAtelierInfos({...atelierInfos, [item.key]: e.target.value})}
                     />
                   ) : (
-                    <p className="text-lg font-medium">{(atelierInfos as any)[item.key]}</p>
+                    <p className="text-lg font-medium">{atelierInfos[item.key]}</p>
                   )}
                 </div>
               ))}

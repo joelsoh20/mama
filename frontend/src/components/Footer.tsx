@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin, Lock } from 'lucide-react';
 import { FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
 import { Link } from 'react-router-dom';
@@ -6,8 +5,6 @@ import { motion } from 'framer-motion';
 import logoSC from '../assets/S_C_mode-removebg-preview.png';
 
 export default function Footer() {
-  const { t } = useTranslation();
-  
   return (
     <footer className="bg-white dark:bg-neutral-900 text-gray-600 dark:text-gray-400 pt-20 pb-8 border-t border-gray-100 dark:border-neutral-800 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">

@@ -1,21 +1,25 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { LogOut, Package, Users, MessageSquare, TrendingUp, ChevronRight, LayoutDashboard } from 'lucide-react';
+import { LogOut, Package, Users, MessageSquare, TrendingUp, ChevronRight, LayoutDashboard, Images } from 'lucide-react';
+
+interface AdminInfo {
+  name: string;
+  username: string;
+  role: string;
+}
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const [adminInfo, setAdminInfo] = useState<any>(null);
+  const [adminInfo] = useState<AdminInfo | null>(() => {
+    const info = localStorage.getItem('adminInfo');
+    return info ? JSON.parse(info) : null;
+  });
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
-    const info = localStorage.getItem('adminInfo');
-
     if (!token) {
       navigate('/admin/login');
-      return;
     }
-
-    if (info) setAdminInfo(JSON.parse(info));
   }, [navigate]);
 
   const handleLogout = () => {
@@ -86,25 +90,31 @@ export default function AdminDashboard() {
           Actions de gestion <div className="h-[1px] bg-gray-100 flex-1" />
         </h3>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
-            { 
-              title: "Catalogue", 
-              desc: "Ajouter, modifier ou retirer des modèles", 
-              path: "/admin/products", 
-              icon: <Package size={32} /> 
+            {
+              title: "Catalogue",
+              desc: "Ajouter, modifier ou retirer des modèles",
+              path: "/admin/products",
+              icon: <Package size={32} />
             },
-            { 
-              title: "Témoignages", 
-              desc: "Gérer les avis de vos clients", 
-              path: "/admin/testimonials", 
-              icon: <Users size={32} /> 
+            {
+              title: "Clients Satisfaits",
+              desc: "Gérer les photos affichées sur la page d'accueil",
+              path: "/admin/client-photos",
+              icon: <Images size={32} />
             },
-            { 
-              title: "Paramètres", 
-              desc: "Gérer les accès administrateurs", 
-              path: "/admin/Settings", 
-              icon: <ShieldCheck size={32} /> 
+            {
+              title: "Témoignages",
+              desc: "Gérer les avis de vos clients",
+              path: "/admin/testimonials",
+              icon: <Users size={32} />
+            },
+            {
+              title: "Paramètres",
+              desc: "Gérer les accès administrateurs",
+              path: "/admin/Settings",
+              icon: <ShieldCheck size={32} />
             }
           ].map((item, i) => (
             <Link 

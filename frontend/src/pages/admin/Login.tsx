@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, Mail, Eye, EyeOff, ShieldCheck } from 'lucide-react';
+import { Lock, User, Eye, EyeOff, ShieldCheck } from 'lucide-react';
+import { ENDPOINTS } from '../../lib/endpoints';
 
 export default function AdminLogin() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false); // État pour la visibilité
   const [loading, setLoading] = useState(false);
@@ -16,24 +17,30 @@ export default function AdminLogin() {
     setError('');
 
     try {
-      const res = await fetch('https://sc-mode.onrender.com/api/auth/login', {
+      const res = await fetch(ENDPOINTS.auth.login, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
       });
 
-      const data = await res.json();
+      // Le serveur peut répondre sans corps JSON exploitable (ex: 502, service indisponible).
+      let data: { message?: string; token?: string; admin?: unknown } | null = null;
+      try {
+        data = await res.json();
+      } catch {
+        data = null;
+      }
 
-      if (!res.ok) {
-        throw new Error(data.message || 'Erreur de connexion');
+      if (!res.ok || !data?.token) {
+        throw new Error(data?.message || `Le serveur est indisponible (code ${res.status}). Réessayez plus tard.`);
       }
 
       localStorage.setItem('adminToken', data.token);
       localStorage.setItem('adminInfo', JSON.stringify(data.admin));
 
       navigate('/admin/dashboard');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Impossible de contacter le serveur. Vérifiez votre connexion.');
     } finally {
       setLoading(false);
     }
@@ -61,17 +68,18 @@ export default function AdminLogin() {
         )}
 
         <form onSubmit={handleLogin} className="space-y-6">
-          {/* Email */}
+          {/* Nom d'utilisateur */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-widest text-[#003366] mb-2">Identifiant Email</label>
+            <label className="block text-xs font-bold uppercase tracking-widest text-[#003366] mb-2">Nom d'utilisateur</label>
             <div className="relative group">
-              <Mail className="absolute left-4 top-3.5 text-gray-400 group-focus-within:text-[#003366] transition-colors" size={20} />
+              <User className="absolute left-4 top-3.5 text-gray-400 group-focus-within:text-[#003366] transition-colors" size={20} />
               <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-[#003366] focus:ring-1 focus:ring-[#003366] transition-all bg-gray-50/50"
-                placeholder="admin@soh-chantal.cm"
+                placeholder="flore"
+                autoComplete="username"
                 required
               />
             </div>

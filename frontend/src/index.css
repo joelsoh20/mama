@@ -47,16 +47,7 @@
   }
 }
 
-/* 6. COMPOSANTS SPÉCIFIQUES */
-@layer components {
-  .hero-bg {
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/hero-couture.jpg');
-    background-size: cover;
-    background-position: center;
-  }
-}
-
-/* 7. RESPONSIVE */
+/* 6. RESPONSIVE */
 @media (max-width: 768px) {
   html {
     font-size: 14px;
