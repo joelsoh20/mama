@@ -15,13 +15,14 @@ const resetAdmin = async () => {
     // On passe le mot de passe en CLAIR, le modèle le hash grâce à @BeforeCreate
     await AdminUser.create({
       name: 'Flore Makune',
+      username: 'flore',
       email: 'makuneflore@gmail.com',
-      password: 'admin123', 
+      password: 'admin123',
       role: 'super_admin'
     });
 
     console.log("✅ NOUVEL ADMIN CRÉÉ AVEC SUCCÈS !");
-    console.log("Identifiants : makuneflore@gmail.com / admin123");
+    console.log("Identifiants : flore / admin123");
 
   } catch (error) {
     console.error("❌ Erreur lors du reset :", error);

@@ -10,6 +10,7 @@ import { connectDB } from './config/database';
 import authRoutes from './routes/auth.routes';
 import productRoutes from './routes/product.routes';
 import testimonialRoutes from './routes/testimonial.routes';
+import clientPhotoRoutes from './routes/clientPhoto.routes';
 
 dotenv.config();
 
@@ -62,8 +63,9 @@ app.post('/api/contact', async (req, res) => {
     `;
 
     await transporter.sendMail({
-      from: `"${name}" <${email}>`,
-      to: process.env.EMAIL_USER,
+      from: `"${name}" <${process.env.EMAIL_USER}>`,
+      replyTo: email,
+      to: process.env.EMAIL_TO || process.env.EMAIL_USER,
       subject: `📩 Nouveau message de ${name}`,
       html: htmlContent,
     });
@@ -79,6 +81,7 @@ app.post('/api/contact', async (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/client-photos', clientPhotoRoutes);
 
 // --- 4. ROUTES DE TEST ---
 app.get('/', (req, res) => {

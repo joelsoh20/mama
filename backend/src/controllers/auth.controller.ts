@@ -1,44 +1,50 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import 'dotenv/config';
 import { AdminUser } from '../models/AdminUser';
 
-const JWT_SECRET = '7f8e9a2b4c5d6e1f0a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4';
+const JWT_SECRET = process.env.JWT_SECRET as string;
 export const loginAdmin = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    if (!JWT_SECRET) {
+      console.error("ERREUR CRITIQUE : JWT_SECRET n'est pas défini dans le .env");
+      return res.status(500).json({ success: false, message: 'Erreur de configuration serveur.' });
+    }
 
-    if (!email || !password) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Email et mot de passe sont obligatoires' 
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Nom d'utilisateur et mot de passe sont obligatoires"
       });
     }
 
-    const admin = await AdminUser.findOne({ where: { email } });
+    const admin = await AdminUser.findOne({ where: { username } });
 
     if (!admin) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Email ou mot de passe incorrect' 
+      return res.status(401).json({
+        success: false,
+        message: "Nom d'utilisateur ou mot de passe incorrect"
       });
     }
 
     const isMatch = await bcrypt.compare(password, admin.password);
 
     if (!isMatch) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Email ou mot de passe incorrect' 
+      return res.status(401).json({
+        success: false,
+        message: "Nom d'utilisateur ou mot de passe incorrect"
       });
     }
 
     const token = jwt.sign(
-      { 
-        id: admin.id, 
-        email: admin.email, 
+      {
+        id: admin.id,
+        username: admin.username,
         name: admin.name,
-        role: admin.role 
+        role: admin.role
       },
       JWT_SECRET,
       { expiresIn: '7d' }
@@ -51,7 +57,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
       admin: {
         id: admin.id,
         name: admin.name,
-        email: admin.email,
+        username: admin.username,
         role: admin.role,
       }
     });

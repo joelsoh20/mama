@@ -8,7 +8,14 @@ export class AdminUser extends Model {
     autoIncrement: true,
     primaryKey: true,
   })
-  declare id: number; 
+  declare id: number;
+
+  @Unique
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare username: string;
 
   @Unique
   @Column({
